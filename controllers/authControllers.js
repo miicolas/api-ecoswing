@@ -68,7 +68,7 @@ const login = async (req, res) => {
 
     res
       .status(200)
-      .redirect("http://localhost:5173/dashboard.html")
+      .redirect("http://localhost:5173/dashboard")
       .cookie("AuthToken", token, {
         httpOnly: true,
         secure: true,

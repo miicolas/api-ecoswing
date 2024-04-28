@@ -9,7 +9,7 @@ const authenticateToken = async (req, res, next) => {
 
   console.log("token", token);
 
-  if (!token || tojen === "null" || token === "undefined") {
+  if (!token || token === "null" || token === "undefined") {
     return res.redirect("http://localhost:5173/login.html"); // Redirection vers la page de connexion si le token est manquant
   }
 

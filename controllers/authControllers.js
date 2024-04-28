@@ -57,9 +57,8 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-
     // envoi le token dans le header
-    jwt.sign(
+    const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
       {
@@ -67,15 +66,7 @@ const login = async (req, res) => {
       },
     );
 
-    // check si le token est bien envoyé dans le header
-    const token = req.headers["authorization"];
-    console.log(token, "token send in header");
-
-
-
-
-    console.log(token);
-    res.status(200).redirect("http://localhost:5173/dashboard.html");
+    res.json({ token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

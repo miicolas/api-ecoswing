@@ -4,8 +4,8 @@ import { getProfile } from "../controllers/profileControllers.js";
 
 const router = express.Router();
 
-
 router.get("/", authenticateToken, (req, res) => {
+  console.log("dashboard");
   res.redirect("/dashboard.html");
 });
 router.get("/getprofile", authenticateToken, getProfile); // Ensure correct route setup

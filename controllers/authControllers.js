@@ -57,35 +57,20 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    // envoi le token dans le header
+    // Création du token
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1800s",
+        expiresIn: "1h",
       },
     );
+    // console log pour vérifier que le token est bien envoyé dans l'en-tête
 
-    res
-      .status(200)
-      .redirect("http://localhost:5173/dashboard")
-      .cookie("AuthToken", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      });
+    res.status(200).json({ token: token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-const logout = async (req, res) => {
-  try {
-    res.clearCookie("AuthToken");
-    res.status(200).redirect("http://localhost:5173/index.html");
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-export { signup, login, logout };
+export { signup, login };

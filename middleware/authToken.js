@@ -1,16 +1,16 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const authenticateToken = async (req, res, next) => {
-  // Récupération du token depuis l'en-tête "Authorization"
   const authHeader = req.headers["authorization"];
-  console.log("authHeader", authHeader);
-
   const token = authHeader && authHeader.split(" ")[1];
 
   console.log("token", token);
 
-  if (!token || token === "null" || token === "undefined") {
-    return res.redirect("http://localhost:5173/login.html"); // Redirection vers la page de connexion si le token est manquant
+  if (!token) {
+    return res.status(401).redirect("http://localhost:5173/login.html");
   }
 
   console.log("checking token");
@@ -22,6 +22,7 @@ const authenticateToken = async (req, res, next) => {
       console.log("token invalide", err);
       return res.redirect("http://localhost:5173/login.html");
     }
+
     console.log("token valide");
     req.user = decodedToken;
     console.log("decoded token", decodedToken);

@@ -66,7 +66,14 @@ const login = async (req, res) => {
       },
     );
 
-    res.json({ token });
+    res
+      .status(200)
+      .redirect("http://localhost:5173/dashboard.html")
+      .cookie("AuthToken", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
